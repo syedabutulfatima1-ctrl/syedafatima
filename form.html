@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 min-h-screen flex items-center justify-center p-4 text-white">
+
+    <div class="w-full max-w-md bg-gray-800/90 backdrop-blur p-6 sm:p-8 rounded-2xl shadow-2xl">
+        <h1 class="text-2xl sm:text-3xl font-bold text-center mb-6">Create Account</h1>
+
+        <form id="appForm" class="space-y-4">
+            <!-- Email -->
+            <div>
+                <label class="block text-sm mb-1">E-mail</label>
+                <input id="email" type="email" required class="w-full rounded-lg bg-gray-700 text-white p-3 outline-none focus:ring-2 focus:ring-blue-400" placeholder="you@example.com">
+            </div>
+
+            <!-- Phone -->
+            <div>
+                <label class="block text-sm mb-1">Phone</label>
+                <input id="phone" type="tel" required class="w-full rounded-lg bg-gray-700 text-white p-3 outline-none focus:ring-2 focus:ring-blue-400" placeholder="+91 98765 43210">
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="block text-sm mb-1">Password</label>
+                <div class="relative">
+                    <input id="password" type="password" required class="w-full rounded-lg bg-gray-700 text-white p-3 pr-12 outline-none focus:ring-2 focus:ring-blue-400" placeholder="••••••••">
+                    <button type="button" id="togglePass" class="absolute right-2 top-1/2 -translate-y-1/2 text-xl">👁️</button>
+                </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div>
+                <label class="block text-sm mb-1">Confirm Password</label>
+                <div class="relative">
+                    <input id="confirmPassword" type="password" required class="w-full rounded-lg bg-gray-700 text-white p-3 pr-12 outline-none focus:ring-2 focus:ring-blue-400" placeholder="••••••••">
+                    <button type="button" id="toggleConfirm" class="absolute right-2 top-1/2 -translate-y-1/2 text-xl">👁️</button>
+                </div>
+            </div>
+
+            <!-- Captcha -->
+            <div>
+                <label class="block text-sm mb-1">Enter captcha</label>
+                <div class="flex items-center gap-3">
+                    <span id="captchaText" class="px-3 py-2 rounded-lg bg-gray-700 tracking-widest select-none">AB12C</span>
+                    <button type="button" id="refreshCaptcha" class="px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-sm">Refresh</button>
+                </div>
+                <input id="captchaInput" type="text" required class="mt-2 w-full rounded-lg bg-gray-700 text-white p-3 outline-none focus:ring-2 focus:ring-blue-400" placeholder="Type the captcha shown above">
+            </div>
+
+            <!-- Error / Success -->
+            <p id="message" class="text-sm mt-2"></p>
+
+            <!-- Register -->
+            <button type="submit" class="w-full py-3 rounded-lg bg-blue-500 hover:bg-blue-600 font-semibold transition">
+        Register
+      </button>
+        </form>
+    </div>
+
+    <script>
+        // Password toggles
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        document.getElementById('togglePass').addEventListener('click', () => {
+            password.type = password.type === 'password' ? 'text' : 'password';
+        });
+        document.getElementById('toggleConfirm').addEventListener('click', () => {
+            confirmPassword.type = confirmPassword.type === 'password' ? 'text' : 'password';
+        });
+
+        // Captcha
+        const captchaText = document.getElementById('captchaText');
+        const captchaInput = document.getElementById('captchaInput');
+        const refreshCaptcha = document.getElementById('refreshCaptcha');
+
+        function generateCaptcha(length = 5) {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let out = '';
+            for (let i = 0; i < length; i++) {
+                out += chars[Math.floor(Math.random() * chars.length)];
+            }
+            return out;
+        }
+
+        function setCaptcha() {
+            captchaText.textContent = generateCaptcha();
+        }
+        refreshCaptcha.addEventListener('click', setCaptcha);
+        setCaptcha();
+
+        // Validation
+        const message = document.getElementById('message');
+        document.getElementById('appForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            message.textContent = '';
+            message.className = 'text-sm mt-2';
+
+            const pass = password.value;
+            const confirm = confirmPassword.value;
+            const captchaOk = captchaInput.value.trim().toUpperCase() === captchaText.textContent.toUpperCase();
+
+            if (pass !== confirm) {
+                message.textContent = 'Passwords do not match.';
+                message.classList.add('text-red-400');
+                return;
+            }
+            if (!captchaOk) {
+                message.textContent = 'Captcha does not match. Try again.';
+                message.classList.add('text-red-400');
+                return;
+            }
+
+            message.textContent = 'Application submitted successfully!';
+            message.classList.add('text-green-400');
+        });
+    </script>
+</body>
+
+</html>

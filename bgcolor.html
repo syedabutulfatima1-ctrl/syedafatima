@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pick Background Color</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* fixed typo */
+        }
+        
+        body {
+            width: 100%;
+            height: 100vh;
+            background-color: lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        
+        .wrapper {
+            height: 100vh;
+            width: 100%;
+            background-color: rgba(250, 3, 3, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 1rem;
+        }
+        
+        .holder {
+            padding: 20px;
+            min-height: 120px;
+            min-width: 120px;
+            background-color: #fff;
+            box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            font-style: italic;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            row-gap: 15px;
+            text-align: center;
+            width: 90%;
+            /* responsive width */
+            max-width: 400px;
+            /* limit on larger screens */
+        }
+        
+        h3 {
+            font-size: 1rem;
+        }
+        
+        input {
+            display: none;
+        }
+        
+        label {
+            width: 70px;
+            height: 70px;
+            background-color: rgb(242, 3, 3);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        /* 📱 Mobile adjustments */
+        
+        @media (max-width: 600px) {
+            h3 {
+                font-size: 0.9rem;
+            }
+            label {
+                width: 60px;
+                height: 60px;
+            }
+            .holder {
+                padding: 15px;
+            }
+        }
+        /* 🖥️ Larger screens */
+        
+        @media (min-width: 1024px) {
+            h3 {
+                font-size: 1.2rem;
+            }
+            label {
+                width: 90px;
+                height: 90px;
+            }
+            .holder {
+                max-width: 500px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="holder">
+            <h3>Pick your background color</h3>
+            <label for="color"></label>
+            <input type="color" id="color">
+        </div>
+    </div>
+    <script>
+        const colorInput = document.getElementById('color');
+        colorInput.addEventListener("input", () => {
+            const colorcode = colorInput.value;
+            document.body.style.backgroundColor = colorcode;
+            document.querySelector('label').style.backgroundColor = colorcode;
+        });
+    </script>
+</body>
+
+</html>

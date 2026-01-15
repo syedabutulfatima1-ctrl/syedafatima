@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science Quotes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full sm:w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 bg-gray-800 p-4 sm:p-6 rounded-lg shadow-lg">
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-center text-yellow-300">
+            📊 Data Science Quotes
+        </h1>
+
+        <button id="fetchBtn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mb-4">
+      Fetch Quotes
+    </button>
+
+        <div id="output" class="space-y-4"></div>
+    </div>
+
+    <script>
+        const fetchBtn = document.getElementById("fetchBtn");
+        const output = document.getElementById("output");
+
+        // Simulated "API" data
+        const quotes = [{
+            text: "It’s easy to lie with statistics. It’s hard to tell the truth without statistics.",
+            author: "Andrejs Dunkels"
+        }, {
+            text: "In God we trust; all others must bring data.",
+            author: "William Edwards Deming"
+        }, {
+            text: "Wrangling data is like interrogating a prisoner. Just because you wrangled a confession doesn’t mean you wrangled the answer.",
+            author: "Brad Schneider"
+        }, {
+            text: "Data isn’t units of information. Data is a story about human behavior.",
+            author: "Daniel Burstein"
+        }, {
+            text: "Data science is a combination of quantitative analysis, programming, and narrative.",
+            author: "Darshan Somashekar"
+        }, {
+            text: "Data is the nutrition of artificial intelligence. When an AI eats junk food, it’s not going to perform very well.",
+            author: "Matthew Emerick"
+        }];
+
+        fetchBtn.addEventListener("click", () => {
+            output.innerHTML = ""; // clear previous content
+
+            quotes.forEach(q => {
+                const card = document.createElement("div");
+                card.className = "bg-gray-700 p-3 sm:p-4 rounded shadow hover:shadow-lg transition";
+                card.innerHTML = `
+          <p class="italic text-base sm:text-lg md:text-xl text-gray-100">"${q.text}"</p>
+          <p class="text-xs sm:text-sm md:text-base text-blue-300 mt-2">— ${q.author}</p>
+        `;
+                output.appendChild(card);
+            });
+        });
+    </script>
+</body>
+
+</html>

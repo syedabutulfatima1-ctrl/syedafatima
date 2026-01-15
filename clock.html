@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <style>
+        body {
+            font-family: "Courier New", monospace;
+            background: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* full height */
+            flex-direction: column;
+            margin: 0;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        #timer {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        #date {
+            font-size: 1rem;
+        }
+        /* 📱 Mobile adjustments */
+        
+        @media (max-width: 600px) {
+            #timer {
+                font-size: 1.5rem;
+            }
+            #date {
+                font-size: 0.9rem;
+            }
+            h4 {
+                font-size: 1rem;
+            }
+        }
+        /* 🖥️ Larger screens */
+        
+        @media (min-width: 1024px) {
+            #timer {
+                font-size: 3rem;
+            }
+            #date {
+                font-size: 1.5rem;
+            }
+            h4 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h4>TIME NOW</h4>
+    <section>
+        <div id="timer"></div>
+        <div id="date"></div>
+    </section>
+
+    <script>
+        const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        const pad = (num) => String(num).padStart(2, '0');
+
+        const showTime = () => {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = pad(now.getMinutes());
+            const seconds = pad(now.getSeconds());
+            const ampm = hours >= 12 ? "PM" : "AM";
+
+            // Convert to 12-hour format
+            hours = hours % 12;
+            hours = hours ? hours : 12; // 0 becomes 12
+            hours = pad(hours);
+
+            document.getElementById("timer").innerHTML =
+                `${hours}:${minutes}:${seconds} ${ampm}`;
+            document.getElementById("date").innerHTML =
+                `${week[now.getDay()]}, ${month[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+        }
+
+        showTime();
+        setInterval(showTime, 1000);
+    </script>
+</body>
+
+</html>

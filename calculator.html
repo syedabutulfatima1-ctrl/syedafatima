@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #040b3f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+        
+        #calculator {
+            width: 100%;
+            max-width: 320px;
+            /* scales on larger screens */
+            padding: 20px;
+            border: 2px solid #000;
+            border-radius: 10px;
+            background-color: #142081;
+        }
+        
+        #display {
+            width: 100%;
+            height: 50px;
+            text-align: right;
+            font-size: 1.5em;
+            padding: 5px;
+            border: 1px solid #77dbff;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        #keys {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        #keys button {
+            width: 100%;
+            height: 60px;
+            font-size: 1.2em;
+            border: none;
+            color: white;
+            border-radius: 50%;
+            background-color: #2d85e2;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        #keys button:hover {
+            background-color: #230776;
+        }
+        
+        #keys button:active {
+            background-color: rgb(245, 255, 104);
+        }
+        
+        #keys button.operator-btn {
+            background-color: #fe9501;
+        }
+        
+        #keys button.operator-btn:hover {
+            background-color: #764807;
+        }
+        
+        #keys button.operator-btn:active {
+            background-color: #feed6b;
+        }
+        
+        #keys button.green {
+            background-color: #01fe44;
+            grid-row: span 2;
+            height: 100%;
+        }
+        
+        #keys button.green:hover {
+            background-color: #107807;
+        }
+        
+        #keys button.green:active {
+            background-color: #feed6b;
+        }
+        
+        #keys button.red {
+            background-color: #ff0000;
+            grid-column: span 2;
+        }
+        
+        #keys button.red:hover {
+            background-color: #c70505;
+        }
+        
+        #keys button.red:active {
+            background-color: #feed6b;
+        }
+        /* 📱 Mobile adjustments */
+        
+        @media (max-width: 480px) {
+            #calculator {
+                max-width: 100%;
+                padding: 15px;
+            }
+            #keys button {
+                height: 50px;
+                font-size: 1em;
+            }
+            #display {
+                height: 45px;
+                font-size: 1.2em;
+            }
+        }
+        /* 🖥️ Larger screens */
+        
+        @media (min-width: 768px) {
+            #calculator {
+                max-width: 400px;
+            }
+            #keys button {
+                height: 70px;
+                font-size: 1.4em;
+            }
+            #display {
+                height: 55px;
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="calculator">
+        <input id="display" readonly>
+        <div id="keys">
+            <button onclick="appendToDisplay('+')" class="operator-btn">+</button>
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('-')" class="operator-btn">-</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('*')" class="operator-btn">*</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('/')" class="operator-btn">/</button>
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="calculate()" class="green">=</button>
+            <button onclick="appendToDisplay('%')" class="operator-btn">%</button>
+            <button onclick="ClearDisplay()" class="red">C</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+
+        function appendToDisplay(value) {
+            display.value += value;
+        }
+
+        function ClearDisplay() {
+            display.value = '';
+        }
+
+        function calculate() {
+            try {
+                display.value = eval(display.value);
+            } catch (e) {
+                display.value = 'Error';
+            }
+        }
+    </script>
+</body>
+
+</html>

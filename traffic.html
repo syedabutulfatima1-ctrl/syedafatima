@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Traffic Signal Simulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-r from-gray-900 via-indigo-900 to-blue-900 flex items-center justify-center min-h-screen text-white">
+
+    <div class="text-center">
+        <h1 class="text-2xl sm:text-3xl font-bold mb-6 text-yellow-300">🚦 Traffic Signal Simulator</h1>
+
+        <!-- Grid for 4 signals -->
+        <div class="grid grid-cols-2 gap-8 sm:gap-12">
+            <!-- Signal 1 -->
+            <div class="bg-gray-800 rounded-lg shadow-lg p-6 w-28 sm:w-36 mx-auto flex flex-col items-center space-y-4">
+                <div id="red1" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-red-700 opacity-30"></div>
+                <div id="yellow1" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-yellow-500 opacity-30"></div>
+                <div id="green1" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-green-600 opacity-30"></div>
+            </div>
+
+            <!-- Signal 2 -->
+            <div class="bg-gray-800 rounded-lg shadow-lg p-6 w-28 sm:w-36 mx-auto flex flex-col items-center space-y-4">
+                <div id="red2" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-red-700 opacity-30"></div>
+                <div id="yellow2" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-yellow-500 opacity-30"></div>
+                <div id="green2" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-green-600 opacity-30"></div>
+            </div>
+
+            <!-- Signal 3 -->
+            <div class="bg-gray-800 rounded-lg shadow-lg p-6 w-28 sm:w-36 mx-auto flex flex-col items-center space-y-4">
+                <div id="red3" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-red-700 opacity-30"></div>
+                <div id="yellow3" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-yellow-500 opacity-30"></div>
+                <div id="green3" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-green-600 opacity-30"></div>
+            </div>
+
+            <!-- Signal 4 -->
+            <div class="bg-gray-800 rounded-lg shadow-lg p-6 w-28 sm:w-36 mx-auto flex flex-col items-center space-y-4">
+                <div id="red4" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-red-700 opacity-30"></div>
+                <div id="yellow4" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-yellow-500 opacity-30"></div>
+                <div id="green4" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-green-600 opacity-30"></div>
+            </div>
+        </div>
+
+        <!-- Control Button -->
+        <button id="startBtn" class="mt-6 px-6 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg font-semibold">
+      Start Simulation
+    </button>
+    </div>
+
+    <script>
+        let currentSignal = 1;
+        let interval;
+
+        function resetAll() {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById("red" + i).style.opacity = "0.3";
+                document.getElementById("yellow" + i).style.opacity = "0.3";
+                document.getElementById("green" + i).style.opacity = "0.3";
+            }
+        }
+
+        function changeSignal() {
+            resetAll();
+
+            // Current signal turns green
+            document.getElementById("green" + currentSignal).style.opacity = "1";
+
+            // After 2 seconds, turn yellow
+            setTimeout(() => {
+                resetAll();
+                document.getElementById("yellow" + currentSignal).style.opacity = "1";
+            }, 2000);
+
+            // After 3 seconds, turn red and move to next signal
+            setTimeout(() => {
+                resetAll();
+                for (let i = 1; i <= 4; i++) {
+                    document.getElementById("red" + i).style.opacity = "1";
+                }
+                currentSignal = (currentSignal % 4) + 1;
+            }, 3000);
+        }
+
+        document.getElementById("startBtn").addEventListener("click", () => {
+            clearInterval(interval);
+            changeSignal(); // start immediately
+            interval = setInterval(changeSignal, 4000); // cycle every 4 seconds
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 flex items-center justify-center min-h-screen text-white">
+
+    <div class="bg-gray-800 p-6 sm:p-8 rounded-xl shadow-2xl w-11/12 sm:w-3/4 lg:w-1/2 max-w-2xl text-center">
+        <h1 class="text-2xl sm:text-3xl font-bold mb-6 text-yellow-300">⏳ Countdown Timer</h1>
+
+        <!-- Input Fields -->
+        <div class="grid grid-cols-3 gap-4 mb-6">
+            <div>
+                <label class="block text-xs sm:text-sm mb-1">Hours</label>
+                <input id="hours" type="number" min="0" class="w-full p-2 rounded bg-gray-700 text-center text-white text-sm sm:text-base">
+            </div>
+            <div>
+                <label class="block text-xs sm:text-sm mb-1">Minutes</label>
+                <input id="minutes" type="number" min="0" class="w-full p-2 rounded bg-gray-700 text-center text-white text-sm sm:text-base">
+            </div>
+            <div>
+                <label class="block text-xs sm:text-sm mb-1">Seconds</label>
+                <input id="seconds" type="number" min="0" class="w-full p-2 rounded bg-gray-700 text-center text-white text-sm sm:text-base">
+            </div>
+        </div>
+
+        <!-- Timer Display -->
+        <div id="display" class="text-3xl sm:text-5xl font-mono mb-6 text-green-400">00:00:00</div>
+
+        <!-- Buttons -->
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <button onclick="startTimer()" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded font-semibold w-full sm:w-auto">Start</button>
+            <button onclick="resetTimer()" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded font-semibold w-full sm:w-auto">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        let countdown;
+        let totalSeconds;
+
+        function startTimer() {
+            clearInterval(countdown);
+
+            const hrs = parseInt(document.getElementById("hours").value) || 0;
+            const mins = parseInt(document.getElementById("minutes").value) || 0;
+            const secs = parseInt(document.getElementById("seconds").value) || 0;
+
+            totalSeconds = hrs * 3600 + mins * 60 + secs;
+
+            if (totalSeconds <= 0) {
+                document.getElementById("display").textContent = "00:00:00";
+                return;
+            }
+
+            countdown = setInterval(() => {
+                if (totalSeconds <= 0) {
+                    clearInterval(countdown);
+                    document.getElementById("display").textContent = "⏰ Time's Up!";
+                    document.getElementById("display").classList.remove("text-green-400");
+                    document.getElementById("display").classList.add("text-red-400");
+                } else {
+                    totalSeconds--;
+                    const h = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+                    const m = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+                    const s = String(totalSeconds % 60).padStart(2, "0");
+                    document.getElementById("display").textContent = `${h}:${m}:${s}`;
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(countdown);
+            document.getElementById("display").textContent = "00:00:00";
+            document.getElementById("display").classList.remove("text-red-400");
+            document.getElementById("display").classList.add("text-green-400");
+        }
+    </script>
+</body>
+
+</html>
