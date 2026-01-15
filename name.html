@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heading</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #4f46e5, #9333ea);
+            /* nice gradient */
+            color: white;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 6vw;
+            /* scales with screen width */
+            max-width: 90%;
+            line-height: 1.2;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="heading"></h1>
+
+    <script>
+        document.getElementById("heading").textContent = "Hi This Is Syeda Butul Fatima!!";
+    </script>
+</body>
+
+</html>
